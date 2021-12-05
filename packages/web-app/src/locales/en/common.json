@@ -29,5 +29,8 @@
     "tokenSection": "Token Section",
     "transferSection": "Transfer Section",
     "unknownUSDValue": "Value unknown"
+  },
+  "allTransfer": {
+    "thisWeek": "This Week"
   }
 }
