@@ -26,7 +26,8 @@
     "to": "To",
     "token": "Token",
     "amount": "Amount",
-    "reference": "Reference"
+    "reference": "Reference",
+    "max": "Max"
   },
   "finance": {
     "tokenSection": "Tokens",

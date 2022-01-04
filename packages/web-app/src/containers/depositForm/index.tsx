@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import {constants} from 'ethers';
 import {useTranslation} from 'react-i18next';
 import {Control, Controller} from 'react-hook-form';
-import {ButtonWallet, Label, TextInput} from '@aragon/ui-components';
+import {
+  ButtonWallet,
+  DropdownInput,
+  Label,
+  TextareaSimple,
+  ValueInput,
+} from '@aragon/ui-components';
 
 import {FormData} from 'pages/newDeposit';
 import {useTransferModalContext} from 'context/transfersModal';
@@ -32,8 +38,7 @@ const DepositForm: React.FC<DepositFormProps> = ({control}) => {
           label={t('labels.token')}
           helpText={t('newDeposit.tokenSubtitle')}
         />
-        {/* TODO: Should change to dropdown input*/}
-        <TextInput side="left" onClick={() => open('token')} />
+        <DropdownInput onClick={() => open('token')} />
       </FormItem>
 
       <FormItem>
@@ -44,13 +49,13 @@ const DepositForm: React.FC<DepositFormProps> = ({control}) => {
         <Controller
           name="amount"
           control={control}
-          render={({field: {name, onBlur, onChange, value}}) => (
-            <TextInput
-              side="left"
-              name={name}
+          render={({field: {onBlur, onChange, value}}) => (
+            <ValueInput
               value={value}
               onBlur={onBlur}
               onChange={onChange}
+              adornmentText={t('labels.max')}
+              onAdornmentClick={() => {}}
             />
           )}
         />
@@ -62,6 +67,7 @@ const DepositForm: React.FC<DepositFormProps> = ({control}) => {
           helpText={t('newDeposit.referenceSubtitle')}
           isOptional={true}
         />
+        <TextareaSimple />
       </FormItem>
     </>
   );
