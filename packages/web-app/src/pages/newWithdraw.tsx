@@ -26,10 +26,10 @@ import {TransferTypes} from 'utils/constants';
 import {useWalletProps} from 'containers/walletMenu';
 import ConfigureWithdrawForm from 'containers/configureWithdraw';
 import {useWalletMenuContext} from 'context/walletMenu';
+import SetupVoting from 'containers/setupWithdrawVoting';
 
 export type FormData = {
   amount: string;
-  reference?: string;
   type: TransferTypes;
   from: Address;
   to: Address;
@@ -39,6 +39,7 @@ export type FormData = {
   tokenDecimals: number;
   tokenAddress: Address;
   tokenBalance: string;
+  startDate: Date;
 };
 
 const steps = {
@@ -52,11 +53,11 @@ const TOTAL_STEPS = Object.keys(steps).length;
 
 const defaultValues = {
   amount: '',
-  reference: '',
   tokenAddress: '',
   tokenSymbol: '',
   tokenName: '',
   tokenImgUrl: '',
+  startDate: new Date(),
 };
 
 const NewWithdraw: React.FC = () => {
@@ -138,10 +139,14 @@ const NewWithdraw: React.FC = () => {
         />
         <FormProvider {...formMethods}>
           <FormLayout>
-            {currentStep === steps.configure ? (
+            {currentStep === steps.setupVoting ? (
               <ConfigureWithdrawForm />
+            ) : currentStep === steps.configure ? (
+              <SetupVoting />
+            ) : currentStep === steps.defineProposal ? (
+              <h1>Define Proposal</h1>
             ) : (
-              <h1>Review Withdraw</h1>
+              <h1>Review Proposal</h1>
             )}
             <FormFooter>
               {/* Should change this to secondary on gray which is unsupported now */}

@@ -51,7 +51,7 @@ const ButtonProvider: React.FC<ButtonProviderProps> = ({
 };
 
 export type ButtonGroupProps = {
-  bgWhite: boolean;
+  bgWhite?: boolean;
   defaultValue: string;
   onChange?: (value: string) => void;
   fullWidth?: boolean;
@@ -59,7 +59,7 @@ export type ButtonGroupProps = {
 };
 
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({
-  bgWhite,
+  bgWhite = false,
   defaultValue,
   onChange,
   fullWidth = false,

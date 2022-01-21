@@ -17,7 +17,7 @@ export const Option: React.FC<OptionProps> = ({value, label}) => {
       bgWhite={!bgWhite}
       mode="ghost"
       size="small"
-      className="flex-1 justify-center whitespace-nowrap"
+      className="flex-1 justify-center font-bold whitespace-nowrap"
       onClick={() => {
         if (onChange) {
           onChange(value);

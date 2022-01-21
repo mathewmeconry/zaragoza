@@ -113,6 +113,14 @@
       "utcMenu": {
         "title": "Select a UTC Timezone"
       }
+    },
+    "setupVoting": {
+      "options": "Options",
+      "start": "Start",
+      "end": "End",
+      "endSubtitle": "Define how long the voting should last in days or exact date and time.",
+      "endErrorMessage": "The minimum duration of 5 days is defined by DAO Governance Settings",
+      "releaseSoon": "New voting types will be released soon"
     }
   }
 }
