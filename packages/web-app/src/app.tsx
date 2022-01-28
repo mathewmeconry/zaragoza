@@ -1,8 +1,8 @@
-import React, {useEffect, lazy, Suspense} from 'react';
+import React, {useEffect, lazy, Suspense, ReactElement} from 'react';
 
 // FIXME: Change route to ApmRoute once package has been updated to be
 // compatible with react-router-dom v6
-import {Navigate, Routes, Route, useLocation, Outlet} from 'react-router-dom';
+import {Routes, Route, useLocation, Outlet} from 'react-router-dom';
 
 import Footer from 'containers/footer';
 import Navbar from 'containers/navbar';
@@ -29,6 +29,10 @@ const ProposalsPage = lazy(() => import('pages/proposals'));
 const NewDepositPage = lazy(() => import('pages/newDeposit'));
 const NewWithdrawPage = lazy(() => import('pages/newWithdraw'));
 
+const withSuspense = (component: ReactElement) => (
+  <Suspense fallback={null}>{component}</Suspense>
+);
+
 function App() {
   const {pathname} = useLocation();
 
@@ -42,19 +46,45 @@ function App() {
       <div className="min-h-screen">
         <Suspense fallback={null}>
           <Routes>
-            <Route path={paths.NewDeposit} element={<NewDepositPage />} />
-            <Route path={paths.NewWithDraw} element={<NewWithdrawPage />} />
+            <Route
+              path={paths.NewDeposit}
+              element={withSuspense(<NewDepositPage />)}
+            />
+            <Route
+              path={paths.NewWithDraw}
+              element={withSuspense(<NewWithdrawPage />)}
+            />
 
             <Route element={<Layout />}>
-              <Route path={paths.Dashboard} element={<HomePage />} />
-              <Route path={paths.Community} element={<CommunityPage />} />
-              <Route path={paths.Finance} element={<FinancePage />} />
-              <Route path={paths.Governance} element={<GovernancePage />} />
-              <Route path={paths.Proposals} element={<ProposalsPage />} />
-              <Route path={paths.AllTokens} element={<TokensPage />} />
-              <Route path={paths.AllTransfers} element={<TransfersPage />} />
-              <Route path={paths.NotFound} element={<NotFoundPage />} />
-              <Route path="*" element={<Navigate to={paths.NotFound} />} />
+              <Route
+                path={paths.Dashboard}
+                element={withSuspense(<HomePage />)}
+              />
+              <Route
+                path={paths.Community}
+                element={withSuspense(<CommunityPage />)}
+              />
+              <Route
+                path={paths.Finance}
+                element={withSuspense(<FinancePage />)}
+              />
+              <Route
+                path={paths.Governance}
+                element={withSuspense(<GovernancePage />)}
+              />
+              <Route
+                path={paths.Proposals}
+                element={withSuspense(<ProposalsPage />)}
+              />
+              <Route
+                path={paths.AllTokens}
+                element={withSuspense(<TokensPage />)}
+              />
+              <Route
+                path={paths.AllTransfers}
+                element={withSuspense(<TransfersPage />)}
+              />
+              <Route path="*" element={withSuspense(<NotFoundPage />)} />
             </Route>
           </Routes>
         </Suspense>
