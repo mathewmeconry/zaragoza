@@ -1,5 +1,5 @@
-# govern.js
+# aragon.js
 
-> The JavaScript client API for the Govern server
+> The JavaScript API for Zaragoza
 
-## [Documentation](https://docs.aragon.org/govern/developers/govern-js)
+## [Documentation]()
