@@ -1,14 +1,22 @@
+import { ethers } from 'ethers';
+import { create, IPFSHTTPClient } from 'ipfs-http-client';
 import { DAO_FACTORY_ADDRESS } from './ConfigDefaults'
+import { GraphQLClient } from 'graphql-request'
 
 export interface ConfigurationObject {
+  signer: ethers.Signer,
   subgraphURL?: string
   daoFactoryAddress?: string
+  ipfsURL?: string,
+  dao?: string
 }
 
-let defaultConfig: Configuration
-const subgraphURL = ''
+let defaultConfig: Configuration;
+const subgraphURL = '';
 
 /**
+ * TODO: Probably worth to rename it to Context
+ * 
  * @class Configuration
  */
 export default class Configuration {
@@ -20,8 +28,11 @@ export default class Configuration {
    * @private
    */
   private config: {
-    subgraphURL: string
-    daoFactoryAddress: string
+    signer: ethers.Signer,
+    daoFactoryAddress: string,
+    dao: string,
+    ipfs: IPFSHTTPClient,
+    subgraph: GraphQLClient
   }
 
   /**
@@ -54,22 +65,38 @@ export default class Configuration {
     }
 
     this.config = {
-      subgraphURL: config.subgraphURL,
-      daoFactoryAddress: config.daoFactoryAddress
-    }
+      signer: config.signer,
+      daoFactoryAddress: config.daoFactoryAddress,
+      dao: config.dao,
+      ipfs: create(config.ipfsURL),
+      subgraph: new GraphQLClient(config.subgraphURL),
+    };
   }
 
   /**
-   * Getter for subgraphURL
+   * Getter for the Signer
+   * 
+   * @var signer
+   * 
+   * @returns {ethers.Signer}
+   * 
+   * @public
+   */
+  get signer(): ethers.Signer {
+    return this.config.signer;
+  }
+
+  /**
+   * Getter for the GraphQLClient instance of the subgraph
    *
-   * @var subgraphURL
+   * @var subgraph
    *
-   * @returns {string}
+   * @returns {GraphQLClient}
    *
    * @public
    */
-  get subgraphURL(): string {
-    return this.config.subgraphURL
+  get subgraph(): GraphQLClient {
+    return this.config.subgraph;
   }
 
   /**
@@ -82,7 +109,33 @@ export default class Configuration {
    * @public
    */
   get daoFactoryAddress(): string {
-    return this.config.daoFactoryAddress
+    return this.config.daoFactoryAddress;
+  }
+
+  /**
+   * Getter for the DAO address in the current global context
+   * 
+   * @var dao
+   * 
+   * @returns {string}
+   * 
+   * @public
+   */
+  get dao(): string {
+    return this.config.dao;
+  }
+
+  /**
+   * Getter for the IPFS http client
+   * 
+   * @var ipfs
+   * 
+   * @returns {IPFSHTTPClient}
+   * 
+   * @public
+   */
+  get ipfs(): IPFSHTTPClient {
+    return this.config.ipfs;
   }
 
   /**
@@ -98,18 +151,18 @@ export default class Configuration {
    */
   static set(config?: ConfigurationObject): void {
     if (!config) {
-      config = {}
+      config = {};
     }
 
     if (!config.subgraphURL) {
-      config.subgraphURL = subgraphURL
+      config.subgraphURL = subgraphURL;
     }
 
     if (!config.daoFactoryAddress) {
-      config.daoFactoryAddress = DAO_FACTORY_ADDRESS
+      config.daoFactoryAddress = DAO_FACTORY_ADDRESS;
     }
 
-    defaultConfig = new Configuration(config)
+    defaultConfig = new Configuration(config);
   }
 
   /**
@@ -121,13 +174,15 @@ export default class Configuration {
    *
    * @public
    */
-  static get(): Configuration {
+  static get(config?: ConfigurationObject): Configuration {
+    // TODO: Add on the fly overwrite of specific properties 
+
     if (typeof defaultConfig !== 'undefined') {
-      return defaultConfig
+      return defaultConfig;
     }
 
-    Configuration.set()
+    Configuration.set();
 
-    return defaultConfig
+    return defaultConfig;
   }
 }

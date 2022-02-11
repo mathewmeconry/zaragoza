@@ -1,6 +1,4 @@
-import Configuration, {
-  ConfigurationObject,
-} from '../internal/configuration/Configuration'
+import Configuration, { ConfigurationObject } from '../internal/configuration/Configuration'
 
 export { ConfigurationObject } from '../internal/configuration/Configuration'
 
@@ -11,6 +9,6 @@ export { ConfigurationObject } from '../internal/configuration/Configuration'
  *
  * @returns {void}
  */
-export function configure(config: ConfigurationObject): void {
+export function init(config: ConfigurationObject): void {
   Configuration.set(config)
 }
