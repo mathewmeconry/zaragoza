@@ -1,8 +1,8 @@
 import { BigNumberish } from "@ethersproject/bignumber";
 import { createProposal } from "./createProposal";
 import { ConfigurationObject } from "./init";
-import { DAO } from "../internal/dao/DAO";
-import Configuration from "../internal/configuration/Configuration";
+import { DAO } from "../internal/abi/dao/DAO";
+import Configuration from "../internal/context/Context";
 import Proposal from "../internal/proposal/Proposal";
 
 /**
@@ -28,7 +28,7 @@ export function withdraw(
     executeIfDecided: boolean = false,
     castVote: boolean = false,
     config?: ConfigurationObject
-): EventEmitter {
+): Proposal {
     return createProposal(
         {
             metadata: proposalMetadata, 

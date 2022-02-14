@@ -1,9 +1,9 @@
 import { BigNumberish } from "@ethersproject/bignumber";
 import { ethers } from "ethers";
 import { EventEmitter } from "eventemitter3";
-import Configuration, { ConfigurationObject } from "../configuration/Configuration";
-import { VOTING } from "../voting/Voting";
-import DAO from "../graphql/queries/DAO";
+import Configuration, { ConfigurationObject } from "../context/Context";
+import { VOTING } from "../abi/voting/Voting";
+import DAO from "../queries/DAO";
 
 export interface Action {
     to: string,
@@ -56,17 +56,7 @@ export default class Proposal extends EventEmitter {
             const tx = await this.config.signer.sendTransaction(
                 {
                     to: this.getVotingContract(), 
-                    data: new ethers.utils.Interface(
-                            VOTING.newVote
-                        ).encodeFunctionData(
-                            VOTING.newVote,
-                            [
-                                cid,
-                                this.proposal.actions,
-                                this.proposal.executeIfDecided,
-                                this.proposal.castVote
-                            ]
-                        )
+                    data: this.encodeProposalCreationCall(cid)
                 }
             )
             
@@ -76,6 +66,29 @@ export default class Proposal extends EventEmitter {
         });
 
         return this;
+    }
+
+    /**
+     * Encodes the proposal creation call
+     * 
+     * @param {string} cid The IPFS hash of the uploaded proposal metadata
+     * 
+     * @private
+     * 
+     * @returns {string} 
+     */
+    private encodeProposalCreationCall(cid: string): string {
+        return new ethers.utils.Interface(
+            VOTING.newVote
+        ).encodeFunctionData(
+            VOTING.newVote,
+            [
+                cid,
+                this.proposal.actions,
+                this.proposal.executeIfDecided,
+                this.proposal.castVote
+            ]
+        );
     }
 
     /**
@@ -130,7 +143,7 @@ export default class Proposal extends EventEmitter {
      *  
      * @returns {string} The address of the voting contract
      */
-    private getVotingContract() {
+    private getVotingContract(): Promise<string> {
         return this.config.subgraph.request(DAO.GET_VOTING_CONTRACT, this.config.dao);
     }
 }
