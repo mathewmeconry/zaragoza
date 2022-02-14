@@ -1,7 +1,7 @@
 import { BigNumberish } from "@ethersproject/bignumber";
 import { ethers } from "ethers";
 import { EventEmitter } from "eventemitter3";
-import Configuration, { ConfigurationObject } from "../context/Context";
+import Configuration, { ContextConfiguration } from "../context/Context";
 import { VOTING } from "../abi/voting/Voting";
 import DAO from "../queries/DAO";
 
@@ -33,11 +33,11 @@ export default class Proposal extends EventEmitter {
 
     /**
      * @param {ProposalObject} proposal All the properties need to submit a proposal.
-     * @param {ConfigurationObject} config The optional config object in case some values of the global one have to be overwritten.
+     * @param {ContextConfiguration} config The optional context config object in case some values of the global one have to be overwritten.
      * 
      * @constructor
      */
-    constructor(private proposal: ProposalObject, config?: ConfigurationObject) { 
+    constructor(private proposal: ProposalObject, config?: ContextConfiguration) { 
         super();
         this.config = Configuration.get(config);
      }

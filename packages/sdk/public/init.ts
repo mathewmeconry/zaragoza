@@ -1,14 +1,14 @@
-import Configuration, { ConfigurationObject } from '../internal/configuration/Configuration'
+import Configuration, { ContextConfiguration } from '../internal/context/Context'
 
-export { ConfigurationObject } from '../internal/configuration/Configuration'
+export { ContextConfiguration } from '../internal/context/Context'
 
 /**
- * Does set the global configuration for Govern
+ * Does set the global context based on the passed configuration
  *
  * @param {ConfigurationObject} config
  *
  * @returns {void}
  */
-export function init(config: ConfigurationObject): void {
+export function init(config: ContextConfiguration): void {
   Configuration.set(config)
 }
