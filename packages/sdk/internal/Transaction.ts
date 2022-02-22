@@ -9,8 +9,10 @@ import Context from "./context/Context";
  */
 export default class Transaction {
     /**
-     * @param {ProposalObject} proposal All the properties need to submit a proposal.
-     * @param {ContextConfiguration} config The optional context config object in case some values of the global one have to be overwritten.
+     * @param {string} to Contract address to call
+     * @param {string} method The whole method signature to later on generate the func sig
+     * @param {Array<any>} methodArguments Method arguments as array
+     * @param {Context} context The global context to execute this TX
      * 
      * @constructor
      */
@@ -22,9 +24,11 @@ export default class Transaction {
     ) { }
 
     /**
-     * Uploads the metadata to IPFS and submits the TX
+     * Encodes the given argumens and submits the TX
      * 
-     * @returns {Proposal}
+     * @param {number} confirmations Optional parameter to configure the amount of blocks that have to be processed to see a TX as confirmed.
+     * 
+     * @returns {Promise<TransactionReceipt>}
      */
     public async create(confirmations?: number): Promise<TransactionReceipt> {
         return (await this.context.signer.sendTransaction(
@@ -36,7 +40,7 @@ export default class Transaction {
     }
 
     /**
-     * Encodes the proposal creation call
+     * Encodes TX data by the given method signature and the passed arguments
      * 
      * @private
      * 
