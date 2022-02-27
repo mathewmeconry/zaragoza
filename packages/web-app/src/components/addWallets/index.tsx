@@ -27,13 +27,6 @@ const AddWallets: React.FC = () => {
     };
   });
 
-  if (fields.length === 0) {
-    append([
-      {address: 'DAO Treasury', amount: '0'},
-      {address: 'My Wallet', amount: '0'},
-    ]);
-  }
-
   const resetDistribution = () => {
     controlledFields.forEach((_, index) => {
       setValue(`wallets.${index}.amount`, '0');

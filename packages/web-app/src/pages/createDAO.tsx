@@ -22,7 +22,7 @@ type FormData = {
   daoSummary: string;
   tokenName: string;
   tokenSymbol: string;
-  tokenTotalSupply: string;
+  tokenTotalSupply: number;
   isCustomToken: boolean;
   links: {label: string; link: string}[];
   wallets: WalletField[];
@@ -35,8 +35,12 @@ type FormData = {
 const defaultValues = {
   tokenName: '',
   tokenSymbol: '',
-  tokenTotalSupply: '',
+  tokenTotalSupply: 0,
   links: [{label: '', href: ''}],
+  wallets: [
+    {address: 'DAO Treasury', amount: '0'},
+    {address: 'My Wallet', amount: '0'},
+  ],
 };
 
 const CreateDAO: React.FC = () => {
@@ -67,7 +71,12 @@ const CreateDAO: React.FC = () => {
   const daoSetupCommunityIsValid = useMemo(() => {
     // required fields not dirty
     if (dirtyFields.isCustomToken === true) {
-      if (!dirtyFields.tokenName || !dirtyFields.tokenSymbol || errors.wallets)
+      if (
+        !dirtyFields.tokenName ||
+        !dirtyFields.wallets ||
+        !dirtyFields.tokenSymbol ||
+        errors.wallets
+      )
         return false;
       return errors.tokenName || errors.tokenSymbol || errors.wallets
         ? false
@@ -81,6 +90,7 @@ const CreateDAO: React.FC = () => {
     dirtyFields.tokenAddress,
     dirtyFields.tokenName,
     dirtyFields.tokenSymbol,
+    dirtyFields.wallets,
     errors.tokenAddress,
     errors.tokenName,
     errors.tokenSymbol,

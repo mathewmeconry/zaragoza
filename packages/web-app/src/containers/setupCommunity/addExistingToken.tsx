@@ -92,7 +92,7 @@ const AddExistingToken: React.FC = () => {
       }
     };
 
-    if (errors.tokenAddress !== undefined && tokenName !== '') {
+    if (errors.tokenAddress === undefined && tokenName === '') {
       resetTokenFields();
     } else {
       fetchContractInfo();
