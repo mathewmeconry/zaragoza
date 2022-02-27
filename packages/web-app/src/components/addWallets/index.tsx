@@ -16,7 +16,7 @@ import Footer from './footer';
 
 const AddWallets: React.FC = () => {
   const {t} = useTranslation();
-  const {control, watch, setValue} = useFormContext();
+  const {control, watch, setValue, resetField} = useFormContext();
   const watchFieldArray = watch('wallets');
   const {fields, append, remove} = useFieldArray({name: 'wallets', control});
 
@@ -31,6 +31,7 @@ const AddWallets: React.FC = () => {
     controlledFields.forEach((_, index) => {
       setValue(`wallets.${index}.amount`, '0');
     });
+    resetField('tokenTotalSupply');
   };
 
   // TODO: research focus after input refactor
@@ -77,6 +78,7 @@ const AddWallets: React.FC = () => {
                 onClick={() => {
                   remove();
                   append([{address: 'DAO Treasury', amount: '0'}]);
+                  resetField('tokenTotalSupply');
                 }}
                 bgWhite
               />

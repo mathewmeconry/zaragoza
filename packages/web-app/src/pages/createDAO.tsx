@@ -47,6 +47,10 @@ const CreateDAO: React.FC = () => {
   const {t} = useTranslation();
   const formMethods = useForm<FormData>({mode: 'onChange', defaultValues});
   const {errors, dirtyFields} = useFormState({control: formMethods.control});
+  const [isCustomToken, tokenTotalSupply] = formMethods.getValues([
+    'isCustomToken',
+    'tokenTotalSupply',
+  ]);
 
   /*************************************************
    *             Step Validation States            *
@@ -70,12 +74,13 @@ const CreateDAO: React.FC = () => {
 
   const daoSetupCommunityIsValid = useMemo(() => {
     // required fields not dirty
-    if (dirtyFields.isCustomToken === true) {
+    if (isCustomToken === true) {
       if (
         !dirtyFields.tokenName ||
         !dirtyFields.wallets ||
         !dirtyFields.tokenSymbol ||
-        errors.wallets
+        errors.wallets ||
+        tokenTotalSupply === 0
       )
         return false;
       return errors.tokenName || errors.tokenSymbol || errors.wallets
@@ -86,7 +91,6 @@ const CreateDAO: React.FC = () => {
       return true;
     }
   }, [
-    dirtyFields.isCustomToken,
     dirtyFields.tokenAddress,
     dirtyFields.tokenName,
     dirtyFields.tokenSymbol,
@@ -95,6 +99,8 @@ const CreateDAO: React.FC = () => {
     errors.tokenName,
     errors.tokenSymbol,
     errors.wallets,
+    isCustomToken,
+    tokenTotalSupply,
   ]);
 
   /*************************************************
