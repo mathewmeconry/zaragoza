@@ -108,10 +108,7 @@ const CreateDAO: React.FC = () => {
    *************************************************/
   return (
     <FormProvider {...formMethods}>
-      <FullScreenStepper
-        totalFormSteps={4}
-        wizardProcessName={t('createDAO.title')}
-      >
+      <FullScreenStepper wizardProcessName={t('createDAO.title')}>
         <Step
           hideWizard
           fullWidth
