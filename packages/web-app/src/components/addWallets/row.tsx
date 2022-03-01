@@ -157,7 +157,7 @@ const WalletRow: React.FC<WalletRowProps> = ({index, onDelete}) => {
         name={`wallets.${index}.amount`}
         control={control}
         rules={{
-          required: t('errors.required.amount') as string,
+          required: t('errors.required.amount'),
           validate: () => amountValidation(index),
         }}
         render={({field, fieldState: {error}}) => (

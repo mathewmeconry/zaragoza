@@ -26,11 +26,13 @@ import {validateTokenAddress} from 'utils/validators';
 
 const DEFAULT_BLOCK_EXPLORER = 'https://etherscan.io/';
 
-type AddExistingToken = {
+type AddExistingTokenType = {
   resetTokenFields: () => void;
 };
 
-const AddExistingToken: React.FC<AddExistingToken> = ({resetTokenFields}) => {
+const AddExistingToken: React.FC<AddExistingTokenType> = ({
+  resetTokenFields,
+}) => {
   const {t} = useTranslation();
   const {account, provider} = useWallet();
   const {control, resetField, setValue} = useFormContext();
