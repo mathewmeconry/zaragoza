@@ -279,9 +279,10 @@ const DepositForm: React.FC = () => {
 
                 {tokenBalance && (
                   <TokenBalance>
-                    {`${t(
-                      'labels.maxBalance'
-                    )}: ${tokenBalance} ${tokenSymbol}`}
+                    {`${t('labels.maxBalance')}: ${tokenBalance.slice(
+                      0,
+                      6
+                    )} ${tokenSymbol}`}
                   </TokenBalance>
                 )}
               </div>
