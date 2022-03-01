@@ -277,7 +277,7 @@ const DepositForm: React.FC = () => {
                   <AlertInline label={error.message} mode="critical" />
                 )}
 
-                {tokenBalance && (
+                {!error?.message && tokenBalance && (
                   <TokenBalance>
                     {`${t('labels.maxBalance')}: ${tokenBalance.slice(
                       0,
