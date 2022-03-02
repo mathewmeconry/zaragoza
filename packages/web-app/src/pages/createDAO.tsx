@@ -15,6 +15,7 @@ import ConfigureCommunity from 'containers/configureCommunity';
 import SetupCommunity from 'containers/setupCommunity';
 import GoLive, {GoLiveHeader, GoLiveFooter} from 'containers/goLive';
 import {WalletField} from '../components/addWallets/row';
+import {Dashboard} from 'utils/paths';
 
 type FormData = {
   daoLogo: string;
@@ -108,11 +109,16 @@ const CreateDAO: React.FC = () => {
    *************************************************/
   return (
     <FormProvider {...formMethods}>
-      <FullScreenStepper wizardProcessName={t('createDAO.title')}>
+      <FullScreenStepper
+        wizardProcessName={t('createDAO.title')}
+        navLabel={t('createDAO.title')}
+        returnPath={Dashboard}
+      >
         <Step
-          hideWizard
           fullWidth
-          customHeader={<OverviewDAOHeader />}
+          includeStepper={false}
+          wizardTitle={t('createDAO.overview.title')}
+          wizardDescription={t('createDAO.overview.description')}
           customFooter={<OverviewDAOFooter />}
         >
           <OverviewDAOStep />

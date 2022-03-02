@@ -17,6 +17,7 @@ import {useWalletProps} from 'containers/walletMenu';
 import {TransferTypes} from 'utils/constants';
 import {BaseTokenInfo} from 'utils/types';
 import {fetchTokenPrice} from 'services/prices';
+import {Governance} from 'utils/paths';
 
 const NewProposal: React.FC = () => {
   const {t} = useTranslation();
@@ -70,7 +71,11 @@ const NewProposal: React.FC = () => {
    *************************************************/
   return (
     <FormProvider {...formMethods}>
-      <FullScreenStepper wizardProcessName={t('newProposal.title')}>
+      <FullScreenStepper
+        wizardProcessName={t('newProposal.title')}
+        navLabel={t('newProposal.title')}
+        returnPath={Governance}
+      >
         <Step
           wizardTitle={t('newWithdraw.defineProposal.heading')}
           wizardDescription={t('newWithdraw.defineProposal.description')}
