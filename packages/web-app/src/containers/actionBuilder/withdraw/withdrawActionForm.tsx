@@ -26,10 +26,10 @@ import {useGlobalModalContext} from 'context/globalModals';
 import {formatUnits, handleClipboardActions} from 'utils/library';
 import {useActionsContext} from 'context/actions';
 
-const ConfigureWithdrawForm: React.FC<{index: number}> = ({index}) => {
+const WithdrawActionForm: React.FC<{index: number}> = ({index}) => {
   const {t} = useTranslation();
   const {open} = useGlobalModalContext();
-  const {setCounter} = useActionsContext();
+  const {setActionsCounter} = useActionsContext();
   const {account, provider} = useWallet();
   const {control, getValues, trigger, resetField, setFocus, setValue} =
     useFormContext();
@@ -238,7 +238,7 @@ const ConfigureWithdrawForm: React.FC<{index: number}> = ({index}) => {
                 mode={error ? 'critical' : 'default'}
                 value={value}
                 onClick={() => {
-                  setCounter(index);
+                  setActionsCounter(index);
                   open('token');
                 }}
                 placeholder={t('placeHolders.selectToken')}
@@ -342,7 +342,7 @@ const ConfigureWithdrawForm: React.FC<{index: number}> = ({index}) => {
   );
 };
 
-export default ConfigureWithdrawForm;
+export default WithdrawActionForm;
 
 const FormItem = styled.div.attrs({
   className: 'space-y-1.5',

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useActionsContext} from 'context/actions';
-import WithdrawAction from './withdrawAction';
+import WithdrawAction from './withdraw/withdrawAction';
 import {ActionsTypes} from 'utils/types';
 import {AddActionItems} from '../addActionMenu';
 import TokenMenu from 'containers/tokenMenu';
@@ -9,7 +9,7 @@ import {BaseTokenInfo, ActionItem} from 'utils/types';
 import {fetchTokenPrice} from 'services/prices';
 import {useDaoTokens} from 'hooks/useDaoTokens';
 import {formatUnits} from 'utils/library';
-import {useFormContext, useWatch} from 'react-hook-form';
+import {useFormContext} from 'react-hook-form';
 
 /**
  * This Component is responsible for generating all actions that append to pipeline context (actions)
@@ -33,43 +33,38 @@ const Action: React.FC<actionsComponentType> = ({name, index}) => {
 };
 
 const ActionBuilder: React.FC = () => {
-  const {counter, actions} = useActionsContext();
+  const {actionsCounter: index, actions} = useActionsContext();
   const {data: tokens} = useDaoTokens('myDaoAddress');
-  const {setValue, resetField, control, clearErrors} = useFormContext();
-
-  const actionss = useWatch({
-    name: 'actions',
-    // control,
-  });
+  const {setValue, resetField, clearErrors} = useFormContext();
 
   /*************************************************
    *             Callbacks and Handlers            *
    *************************************************/
 
   const handleTokenSelect = (token: BaseTokenInfo) => {
-    setValue(`actions.${counter}.tokenSymbol`, token.symbol);
+    setValue(`actions.${index}.tokenSymbol`, token.symbol);
 
     if (token.address === '') {
-      setValue(`actions.${counter}.isCustomToken`, true);
-      resetField(`actions.${counter}.tokenName`);
-      resetField(`actions.${counter}.tokenImgUrl`);
-      resetField(`actions.${counter}.tokenAddress`);
-      resetField(`actions.${counter}.tokenBalance`);
-      clearErrors(`actions.${counter}.amount`);
+      setValue(`actions.${index}.isCustomToken`, true);
+      resetField(`actions.${index}.tokenName`);
+      resetField(`actions.${index}.tokenImgUrl`);
+      resetField(`actions.${index}.tokenAddress`);
+      resetField(`actions.${index}.tokenBalance`);
+      clearErrors(`actions.${index}.amount`);
       return;
     }
 
-    setValue(`actions.${counter}.isCustomToken`, false);
-    setValue(`actions.${counter}.tokenName`, token.name);
-    setValue(`actions.${counter}.tokenImgUrl`, token.imgUrl);
-    setValue(`actions.${counter}.tokenAddress`, token.address);
+    setValue(`actions.${index}.isCustomToken`, false);
+    setValue(`actions.${index}.tokenName`, token.name);
+    setValue(`actions.${index}.tokenImgUrl`, token.imgUrl);
+    setValue(`actions.${index}.tokenAddress`, token.address);
     setValue(
-      `actions.${counter}.tokenBalance`,
+      `actions.${index}.tokenBalance`,
       formatUnits(token.count, token.decimals)
     );
 
     fetchTokenPrice(token.address).then(price => {
-      setValue(`actions.${counter}.tokenPrice`, price);
+      setValue(`actions.${index}.tokenPrice`, price);
     });
   };
 

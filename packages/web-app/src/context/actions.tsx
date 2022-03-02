@@ -16,8 +16,8 @@ const ActionsContext = createContext<ActionsContextType | null>(null);
 type ActionsContextType = {
   daoAddress: Address;
   actions: ActionItem[];
-  counter: number;
-  setCounter: (index: number) => void;
+  actionsCounter: number;
+  setActionsCounter: (index: number) => void;
   addAction: (value: ActionItem) => void;
   duplicateAction: (index: number) => void;
   removeAction: (index: number) => void;
@@ -34,24 +34,18 @@ const ActionsProvider: React.FC<Props> = ({children}) => {
   const [daoAddress, setDaoAddress] =
     useState<ActionsContextType['daoAddress']>('');
   const [actions, setActions] = useState<ActionsContextType['actions']>([]);
-  const [counter, setCounter] = useState<ActionsContextType['counter']>(0);
+  const [actionsCounter, setActionsCounter] =
+    useState<ActionsContextType['actionsCounter']>(0);
 
   const {control} = useFormContext();
-  const {append, remove} = useFieldArray({
-    control,
-    name: 'actions',
-  });
+  const {remove} = useFieldArray({control, name: 'actions'});
 
-  const addAction = useCallback(
-    newAction => {
-      append(newAction);
-      setActions((oldActions: ActionsContextType['actions']) => [
-        ...oldActions,
-        newAction,
-      ]);
-    },
-    [append]
-  );
+  const addAction = useCallback(newAction => {
+    setActions((oldActions: ActionsContextType['actions']) => [
+      ...oldActions,
+      newAction,
+    ]);
+  }, []);
 
   const removeAction = useCallback(
     (index: number) => {
@@ -63,16 +57,12 @@ const ActionsProvider: React.FC<Props> = ({children}) => {
     [actions, remove]
   );
 
-  const duplicateAction = useCallback(
-    (index: number) => {
-      append(actions[index]);
-      setActions((oldActions: ActionsContextType['actions']) => [
-        ...oldActions,
-        oldActions[index],
-      ]);
-    },
-    [actions, append]
-  );
+  const duplicateAction = useCallback((index: number) => {
+    setActions((oldActions: ActionsContextType['actions']) => [
+      ...oldActions,
+      oldActions[index],
+    ]);
+  }, []);
 
   const value = useMemo(
     (): ActionsContextType => ({
@@ -82,10 +72,17 @@ const ActionsProvider: React.FC<Props> = ({children}) => {
       addAction,
       removeAction,
       duplicateAction,
-      counter,
-      setCounter,
+      actionsCounter,
+      setActionsCounter,
     }),
-    [daoAddress, actions, addAction, removeAction, duplicateAction, counter]
+    [
+      daoAddress,
+      actions,
+      addAction,
+      removeAction,
+      duplicateAction,
+      actionsCounter,
+    ]
   );
 
   return (
