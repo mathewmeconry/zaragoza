@@ -5,7 +5,6 @@ import {
   ButtonText,
   ButtonWallet,
   IconMenu,
-  IconMenuVertical,
 } from '@aragon/ui-components';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
@@ -47,7 +46,6 @@ const MobileNav: React.FC<MobileNavProps> = props => {
           crumbs={{label: props.processLabel!, path: props.returnURL!}}
           onClick={(path: string) => navigate(path)}
         />
-        <ButtonIcon mode="secondary" size="large" icon={<IconMenuVertical />} />
       </ProcessMenuItems>
     );
   }
