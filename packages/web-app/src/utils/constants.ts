@@ -1,5 +1,8 @@
 import {Dashboard, Community, Finance, Governance} from './paths';
 
+export const SUBGRAPH_API_URL =
+  'https://api.thegraph.com/subgraphs/name/aragon/aragon-zaragoza-rinkeby';
+
 export const BASE_URL = 'https://api.coingecko.com/api/v3';
 export const DEFAULT_CURRENCY = 'usd';
 export const INFURA_PROJECT_ID = '7a03fcb37be7479da06f92c5117afd47';

@@ -1,7 +1,11 @@
-import {ApolloClient, InMemoryCache} from '@apollo/client';
+import {ApolloClient, HttpLink, InMemoryCache} from '@apollo/client';
 import {RestLink} from 'apollo-link-rest';
 import {CachePersistor, LocalStorageWrapper} from 'apollo3-cache-persist';
-import {BASE_URL} from 'utils/constants';
+import {BASE_URL, SUBGRAPH_API_URL} from 'utils/constants';
+
+const graphLink = new HttpLink({
+  uri: SUBGRAPH_API_URL,
+});
 
 const restLink = new RestLink({
   uri: BASE_URL,
@@ -66,5 +70,5 @@ restoreApolloCache();
 
 export const client = new ApolloClient({
   cache,
-  link: restLink,
+  link: restLink.concat(graphLink),
 });

@@ -1,5 +1,9 @@
 import {gql} from '@apollo/client';
 
+/**
+ * Voters and Actions can be paginanted
+ * or can be used to get array length
+ */
 export const WHITELIST_PROPOSAL_LIST = gql`
   query whitelistProposals($dao: ID, $offset: Int, $limit: Int) {
     whitelistProposals(
@@ -52,6 +56,10 @@ export const WHITELIST_PROPOSAL_LIST = gql`
   }
 `;
 
+/**
+ * Voters and Actions can be paginanted
+ * or can be used to get array length
+ */
 export const WHITELIST_PROPOSAL_DETAILS = gql`
   query whitelistProposals($id: ID) {
     whitelistProposals(where: {id: $id}) {
@@ -98,6 +106,10 @@ export const WHITELIST_PROPOSAL_DETAILS = gql`
   }
 `;
 
+/**
+ * Voters and Actions can be paginanted
+ * or can be used to get array length (in case of erc20Voting Voters does not mean it covers all the voters of this package)
+ */
 export const ERC20VOTING_PROPOSAL_LIST = gql`
   query erc20VotingProposals($dao: ID, $offset: Int, $limit: Int) {
     erc20VotingProposals(
@@ -149,6 +161,10 @@ export const ERC20VOTING_PROPOSAL_LIST = gql`
   }
 `;
 
+/**
+ * Voters and Actions can be paginanted
+ * or can be used to get array length (in case of erc20Voting Voters does not mean it covers all the voters of this package)
+ */
 export const ERC20VOTING_PROPOSAL_DETAILS = gql`
   query erc20VotingProposal($id: ID) {
     erc20VotingProposals(where: {id: $id}) {
