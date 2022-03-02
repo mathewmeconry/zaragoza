@@ -10,7 +10,7 @@ import {
 import {useFormContext} from 'react-hook-form';
 
 import {useActionsContext} from 'context/actions';
-import ConfigureWithdrawForm from '../configureWithdraw';
+import WithdrawActionForm from 'containers/configureActions/withdrawActionForm';
 
 type Props = {
   index: number;
@@ -19,13 +19,16 @@ type Props = {
 const WithdrawAction: React.FC<Props> = ({index}) => {
   const {t} = useTranslation();
   const {removeAction, duplicateAction} = useActionsContext();
-  const {setValue, resetField} = useFormContext();
+  const {setValue, clearErrors} = useFormContext();
 
   const resetWithdrawFields = () => {
-    setValue('to', '');
-    resetField('tokenSymbol');
-    setValue('tokenAddress', '');
-    setValue('amount', '');
+    clearErrors(`actions.${index}`);
+    setValue(`actions.${index}`, {
+      to: '',
+      amount: '',
+      tokenAddress: '',
+      tokenSymbol: '',
+    });
   };
 
   return (
@@ -70,7 +73,7 @@ const WithdrawAction: React.FC<Props> = ({index}) => {
         </Popover>
       </Header>
       <Body>
-        <ConfigureWithdrawForm />
+        <WithdrawActionForm index={index} />
       </Body>
     </Container>
   );
