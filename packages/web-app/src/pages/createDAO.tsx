@@ -4,11 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {FormProvider, useForm, useFormState} from 'react-hook-form';
 
 import {FullScreenStepper, Step} from 'components/fullScreenStepper';
-import {
-  OverviewDAOFooter,
-  OverviewDAOHeader,
-  OverviewDAOStep,
-} from 'containers/daoOverview';
+import {OverviewDAOFooter, OverviewDAOStep} from 'containers/daoOverview';
 import SelectChain from 'containers/selectChainForm';
 import DefineMetadata from 'containers/defineMetadata';
 import ConfigureCommunity from 'containers/configureCommunity';

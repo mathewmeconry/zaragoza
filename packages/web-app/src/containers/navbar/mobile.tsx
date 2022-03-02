@@ -6,7 +6,6 @@ import {
   IconMenu,
 } from '@aragon/ui-components';
 import styled from 'styled-components';
-
 import {useTranslation} from 'react-i18next';
 import React, {useState} from 'react';
 
@@ -17,6 +16,7 @@ import {useWalletProps} from 'containers/walletMenu';
 import NetworkIndicator from './networkIndicator';
 import {useGlobalModalContext} from 'context/globalModals';
 import {NetworkIndicatorStatus} from 'utils/types';
+
 type MobileNavProps = {
   status?: NetworkIndicatorStatus;
   isProcess?: boolean;
@@ -37,56 +37,53 @@ const MobileNav: React.FC<MobileNavProps> = props => {
         <NetworkIndicator status={props.status} />
       </Container>
     );
-  else
-    return (
-      <>
-        <Container data-testid="navbar">
-          <Menu>
-            <FlexOne>
-              {isMobile ? (
-                <ButtonIcon
-                  mode="secondary"
-                  size="large"
-                  icon={<IconMenu />}
-                  onClick={() => setIsOpen(true)}
-                />
-              ) : (
-                <ButtonText
-                  size="large"
-                  mode="secondary"
-                  label={t('menu')}
-                  iconLeft={<IconMenu />}
-                  onClick={() => setIsOpen(true)}
-                />
-              )}
-            </FlexOne>
-            <FlexOne className="justify-center">
-              <DaoContainer>
-                <AvatarDao
-                  daoName="DAO Name"
-                  onClick={() => open('selectDao')}
-                />
-                <DaoName>DAO Name</DaoName>
-              </DaoContainer>
-            </FlexOne>
-            <FlexOne className="justify-end">
-              <ButtonWallet
-                src={ensAvatarUrl || account}
-                onClick={props.onWalletClick}
-                isConnected={isConnected()}
-                label={
-                  isConnected()
-                    ? ensName || account
-                    : t('navButtons.connectWallet')
-                }
+
+  return (
+    <>
+      <Container data-testid="navbar">
+        <Menu>
+          <FlexOne>
+            {isMobile ? (
+              <ButtonIcon
+                mode="secondary"
+                size="large"
+                icon={<IconMenu />}
+                onClick={() => setIsOpen(true)}
               />
-            </FlexOne>
-          </Menu>
-          <NetworkIndicator status={props.status} />
-        </Container>
-        <MobileMenu isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      </>
-    );
+            ) : (
+              <ButtonText
+                size="large"
+                mode="secondary"
+                label={t('menu')}
+                iconLeft={<IconMenu />}
+                onClick={() => setIsOpen(true)}
+              />
+            )}
+          </FlexOne>
+          <FlexOne className="justify-center">
+            <DaoContainer>
+              <AvatarDao daoName="DAO Name" onClick={() => open('selectDao')} />
+              <DaoName>DAO Name</DaoName>
+            </DaoContainer>
+          </FlexOne>
+          <FlexOne className="justify-end">
+            <ButtonWallet
+              src={ensAvatarUrl || account}
+              onClick={props.onWalletClick}
+              isConnected={isConnected()}
+              label={
+                isConnected()
+                  ? ensName || account
+                  : t('navButtons.connectWallet')
+              }
+            />
+          </FlexOne>
+        </Menu>
+        <NetworkIndicator status={props.status} />
+      </Container>
+      <MobileMenu isOpen={isOpen} onClose={() => setIsOpen(false)} />
+    </>
+  );
 };
 
 export default MobileNav;
