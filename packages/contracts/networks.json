@@ -8,11 +8,11 @@
       "isTestnet": true
     },
     "arbitrum": {
-      "url": "https://mainnet.infura.io/v3/92aa62d2bb5449cfafe04b83ca8636f1",
+      "url": "https://arbitrum-mainnet.infura.io/v3/92aa62d2bb5449cfafe04b83ca8636f1",
       "isTestnet": false
     },
     "arbitrum-rinkeby": {
-      "url": "https://rinkeby.infura.io/v3/92aa62d2bb5449cfafe04b83ca8636f1",
+      "url": "https://arbitrum-rinkeby.infura.io/v3/92aa62d2bb5449cfafe04b83ca8636f1",
       "isTestnet": true
     },
     "polygon": {
