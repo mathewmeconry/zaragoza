@@ -15,6 +15,7 @@ const SetupCommunityForm: React.FC = () => {
   const resetTokenFields = () => {
     resetField('tokenName');
     resetField('tokenSymbol');
+    resetField('tokenAddress');
     resetField('tokenTotalSupply');
     setValue('wallets', [
       {address: 'DAO Treasury', amount: '0'},
