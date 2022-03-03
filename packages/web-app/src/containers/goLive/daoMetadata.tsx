@@ -57,22 +57,27 @@ const DaoMetadata: React.FC = () => {
           </LabelWrapper>
           <DescriptionContent>{daoSummary}</DescriptionContent>
         </Row>
-        <Row>
-          <LabelWrapper>
-            <Label>{t('labels.links')}</Label>
-          </LabelWrapper>
-          <ContentWrapper>
-            {links.map(
-              ({label, href}: {label: string; href: string}, index: number) => {
-                return (
-                  href !== '' && (
-                    <ListItemLink key={index} {...{label, href}} external />
-                  )
-                );
-              }
-            )}
-          </ContentWrapper>
-        </Row>
+        {links[0].href !== '' && (
+          <Row>
+            <LabelWrapper>
+              <Label>{t('labels.links')}</Label>
+            </LabelWrapper>
+            <ContentWrapper>
+              {links.map(
+                (
+                  {label, href}: {label: string; href: string},
+                  index: number
+                ) => {
+                  return (
+                    href !== '' && (
+                      <ListItemLink key={index} {...{label, href}} external />
+                    )
+                  );
+                }
+              )}
+            </ContentWrapper>
+          </Row>
+        )}
       </Body>
       <Footer>
         <ActionWrapper>
