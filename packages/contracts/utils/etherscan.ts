@@ -17,10 +17,11 @@ export const verifyContract = async (
     path.join(__dirname, '../networks.json'),
     'utf8'
   );
-  if (!Object.keys(networks).includes(currentNetwork)) {
+  const networksJSON = JSON.parse(networks.toString());
+  if (!Object.keys(networksJSON).includes(currentNetwork)) {
     throw Error(
       `Current network ${currentNetwork} not supported. Please change to one of the next networks: ${Object.keys(
-        networks
+        networksJSON
       ).join(',')}`
     );
   }
