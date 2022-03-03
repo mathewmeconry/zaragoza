@@ -40,12 +40,10 @@ const DaoMetadata: React.FC = () => {
           <LabelWrapper>
             <Label>{t('labels.logo')}</Label>
           </LabelWrapper>
-          {daoLogo && (
-            <AvatarDao
-              {...{daoName}}
-              src={daoLogo ? URL.createObjectURL(daoLogo) : ''}
-            />
-          )}
+          <AvatarDao
+            {...{daoName}}
+            {...(daoLogo && {src: URL.createObjectURL(daoLogo)})}
+          />
         </LogoRow>
         <Row>
           <LabelWrapper>
