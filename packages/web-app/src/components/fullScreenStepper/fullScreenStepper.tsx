@@ -60,7 +60,7 @@ export const FullScreenStepper: React.FC<FullScreenStepperProps> = ({
     return total;
   }, [children]);
 
-  const previousHideWizard = useMemo(() => {
+  const previousHideWizards = useMemo(() => {
     let total = 0;
     for (let i = 0; i < currentStep; i++) {
       children[i].props.hideWizard && total++;
@@ -74,9 +74,9 @@ export const FullScreenStepper: React.FC<FullScreenStepperProps> = ({
     if (hideWizard) {
       return currentStep;
     } else {
-      return currentStep - previousHideWizard;
+      return currentStep - previousHideWizards;
     }
-  }, [currentStep, hideWizard, previousHideWizard]);
+  }, [currentStep, hideWizard, previousHideWizards]);
 
   return (
     <FullScreenStepperContext.Provider value={value}>
