@@ -64,7 +64,6 @@ const DaoMetadata: React.FC = () => {
           <ContentWrapper>
             {links.map(
               ({label, href}: {label: string; href: string}, index: number) => {
-                console.log(links);
                 return (
                   href !== '' && (
                     <ListItemLink key={index} {...{label, href}} external />
