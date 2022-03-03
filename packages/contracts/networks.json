@@ -1,0 +1,26 @@
+{
+    "mainnet": {
+      "url": "https://mainnet.eth.aragon.network/",
+      "isTestnet": false
+    },
+    "rinkeby": {
+      "url": "https://rinkeby.eth.aragon.network/",
+      "isTestnet": true
+    },
+    "arbitrum": {
+      "url": "https://mainnet.infura.io/v3/92aa62d2bb5449cfafe04b83ca8636f1",
+      "isTestnet": false
+    },
+    "arbitrum-rinkeby": {
+      "url": "https://rinkeby.infura.io/v3/92aa62d2bb5449cfafe04b83ca8636f1",
+      "isTestnet": true
+    },
+    "polygon": {
+      "url": "https://polygon-mainnet.infura.io/v3/1011d31bf5b34d68b94895caa2d2da58",
+      "isTestnet": false
+    },
+    "polygon-mumbai": {
+      "url": "https://polygon-mumbai.infura.io/v3/1011d31bf5b34d68b94895caa2d2da58",
+      "isTestnet": true
+    }
+  }
