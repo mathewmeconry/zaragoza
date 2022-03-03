@@ -47,7 +47,7 @@ jobs:
         run: cd packages/contracts && yarn run deploy --network $NETWORK --tags "DAOFactory,TokenFactory,${{ needs.prepare.outputs.tags }}"
         env:
           ETH_KEY: ${{ secrets.ETH_KEY }}
-          NETWORK: ${{ secrets.NETWORK_NAME }}
+          NETWORK: ${{ matrix.network }}
           ETHERSCAN_KEY: ${{ secrets.ETHERSCAN_KEY }}
       - uses: actions/upload-artifact@v2
         with:
