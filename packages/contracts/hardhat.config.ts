@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
-import fs from 'fs'
-import path from 'path'
+import fs from 'fs';
+import path from 'path';
 
 import {HardhatUserConfig, task} from 'hardhat/config';
 import '@nomiclabs/hardhat-etherscan';
@@ -15,11 +15,13 @@ dotenv.config();
 const ETH_KEY = process.env.ETH_KEY;
 const accounts = ETH_KEY ? ETH_KEY.split(',') : [];
 
-const networks = JSON.parse(fs.readFileSync(path.join(__dirname, './networks.json'), 'utf8'))
+const networks = JSON.parse(
+  fs.readFileSync(path.join(__dirname, './networks.json'), 'utf8')
+);
 
 // add accounts to network configs
-for(const network of Object.keys(networks)) {
-  networks[network].accounts = accounts
+for (const network of Object.keys(networks)) {
+  networks[network].accounts = accounts;
 }
 
 // You need to export an object to set up your config
@@ -34,9 +36,9 @@ const config: HardhatUserConfig = {
         runs: 2000,
       },
       outputSelection: {
-        "*": {
-          "*": ["storageLayout"]
-        }
+        '*': {
+          '*': ['storageLayout'],
+        },
       },
     },
   },
@@ -46,14 +48,21 @@ const config: HardhatUserConfig = {
       throwOnTransactionFailures: true,
       throwOnCallFailures: true,
     },
-    ...networks
+    ...networks,
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
     currency: 'USD',
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_KEY,
+    apiKey: {
+      mainnet: process.env.ETHERSCAN_KEY || '',
+      rinkeby: process.env.ETHERSCAN_KEY || '',
+      polygon: process.env.POLYGONSCAN_KEY || '',
+      polygonMumbai: process.env.POLYGONSCAN_KEY || '',
+      arbitrumOne: process.env.ARBISCAN_KEY || '',
+      arbitrumTestnet: process.env.ARBISCAN_KEY || '',
+    },
   },
   namedAccounts: {
     deployer: 0,

@@ -19,16 +19,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await delay(180000); // 3 minutes - Etherscan needs some time to process before trying to verify.
   console.log('Starting to verify now');
 
-  let apiKey = process.env.ETHERSCAN_KEY;
-  if(hre.network.name.includes('arbitrum')) {
-    apiKey = process.env.ARBISCAN_KEY
-  }
-  if(hre.network.name.includes('polygon')) {
-    apiKey = process.env.POLYGONSCAN_KEY
-  }
-
   await run(TASK_ETHERSCAN_VERIFY, {
-    apiKey: process.env.ETHERSCAN_KEY,
     license: 'GPL-3.0',
     solcInput: true,
   });
