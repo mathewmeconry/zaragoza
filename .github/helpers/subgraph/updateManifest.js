@@ -6,11 +6,6 @@ async function main() {
     path.join(process.env.GITHUB_WORKSPACE, 'artefacts'),
     {withFileTypes: true}
   );
-  const activeContracts = await fs.readFile(
-    path.join(process.env.GITHUB_WORKSPACE, 'active_contracts.json')
-  );
-  const activeContractsJson = JSON.parse(activeContracts.toString());
-
   for (const network of networks) {
     if (network.isDirectory()) {
       const networkName = network.name;
@@ -23,27 +18,32 @@ async function main() {
 
       const contracts = await fs.readdir(networkPath, {withFileTypes: true});
       for (const contract of contracts) {
-        if (contract.isFile() && contract.name.endsWith('.json')) {
-          const contractName = contract.name.split('.')[0];
+        if (contract.isFile() && contract.name === 'Registry.json') {
           const contractPath = path.join(networkPath, contract.name);
           const contractContent = await fs.readFile(contractPath);
           const contractJson = JSON.parse(contractContent.toString());
-          const contractAddr = contractJson.address;
-
-          if (!activeContractsJson[networkName]) {
-            activeContractsJson[networkName] = {};
-          }
-
-          activeContractsJson[networkName][contractName] = contractAddr;
+          const manifest = {
+            info: '# Do not edit subgraph.yaml,this is a generated file. \n# Instead, edit subgraph.placeholder.yaml and run: yarn manifest',
+            network: networkName,
+            dataSources: {
+              Registry: {
+                name: 'Registry',
+                address: contractJson.address,
+                startBlock: contractJson.receipt.blockNumber,
+              },
+            },
+          };
+          await fs.writeFile(
+            path.join(
+              process.env.GITHUB_WORKSPACE,
+              `packages/subgraph/manifest/data/${networkName}.json`
+            ),
+            JSON.stringify(manifest, null, 2)
+          );
         }
       }
     }
   }
-
-  await fs.writeFile(
-    path.join(process.env.GITHUB_WORKSPACE, 'active_contracts.json'),
-    JSON.stringify(activeContractsJson, null, 2)
-  );
 }
 
 main();

@@ -8,7 +8,24 @@ on:
       - 'main'
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install dependencies
+        run: yarn install --pure-lockfile
+      - name: Compile
+        run: cd packages/contracts && yarn run compile
+      - name: Run Hardhat Tests
+        env:
+          REPORT_GAS: true
+        run: cd packages/contracts && yarn run test
   prepare:
+    needs: [test]
     runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.prepare.outputs.environment }}
@@ -36,10 +53,6 @@ jobs:
         run: yarn install --pure-lockfile
       - name: Compile
         run: cd packages/contracts && yarn run compile
-      - name: Run Hardhat Tests
-        env:
-          REPORT_GAS: true
-        run: cd packages/contracts && yarn run test
       - name: Deploy
         run: cd packages/contracts && yarn run deploy --network $NETWORK --tags "DAOFactory,TokenFactory,${{ needs.prepare.outputs.tags }}"
         env:
@@ -71,6 +84,27 @@ jobs:
           git pull
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git add .
+          git add active_contracts.json
+          git add packages/contracts/Releases.md
           git commit -am "Updates files with deployed contract addresses"
           git push
+  subgraphUpdate:
+    runs-on: ubuntu-latest
+    needs: ['build-deploy']
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v3
+        with:
+          path: artefacts
+      - name: Update Subgraph manifests
+        run: node .github/helpers/subgraph/updateManifest.js
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          add-paths: ./packages/subgraph/	
+          commit-message: Update subgraph manifests
+          branch: feature/update-manifests
+          delete-branch: true
+          branch-suffix: short-commit-hash
+          title: Updates Subgraph manifests
+          reviewers: Rekard0,RakeshUP

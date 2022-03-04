@@ -19,14 +19,15 @@ async function main() {
       const networkPath = path.join(
         process.env.GITHUB_WORKSPACE,
         'artefacts',
+        networkName,
         networkName
       );
 
-      releasesUpdate = [
+      releasesUpdate = releasesUpdate.concat([
         `Time: ${new Date().toISOString()}  `,
         `Commit: [${process.env.GITHUB_SHA}](https://github.com/aragon/zaragoza/commit/${process.env.GITHUB_SHA})  `,
         `Network: ${networkName}  `,
-      ];
+      ]);
 
       const contracts = await fs.readdir(networkPath, {withFileTypes: true});
       for (const contract of contracts) {
