@@ -2,7 +2,7 @@ const fs = require('fs/promises');
 const path = require('path');
 
 async function main(ref) {
-  const isTestnet = ref.endsWith('/develop');
+  const isTestnet = !ref.endsWith('/main');
   const networks = await fs.readFile(
     path.join(process.env.GITHUB_WORKSPACE, 'packages/contracts/networks.json')
   );
