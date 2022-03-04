@@ -17,6 +17,7 @@ async function main() {
       const networkPath = path.join(
         process.env.GITHUB_WORKSPACE,
         'artefacts',
+        networkName,
         networkName
       );
 
