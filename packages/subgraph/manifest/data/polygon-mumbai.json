@@ -1,11 +1,11 @@
 {
   "info": "# Do not edit subgraph.yaml,this is a generated file. \n# Instead, edit subgraph.placeholder.yaml and run: yarn manifest",
-  "network": "rinkeby",
+  "network": "polygon-mumbai",
   "dataSources": {
     "Registry": {
       "name": "Registry",
-      "address": "0xb163e7606847E86A6ecd8c40432A3c75d27dBD80",
-      "startBlock": 10269584
+      "address": "0xB2A2b32b9d885C85d5b229C0509341c37CaE7483",
+      "startBlock": 25372851
     }
   }
 }
